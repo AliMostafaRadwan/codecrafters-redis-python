@@ -9,10 +9,13 @@ def main():
     # Uncomment this to pass the first stage
     #
     server_socket = socket.create_server(("localhost", 6379), reuse_port=True)
-    while True:
-        sock_cl, addr = server_socket.accept()
-        sock_cl.send(b"+PONG\r\n")
-
+    
+    sock_cl, addr = server_socket.accept()
+    while sock_cl:
+        data = sock_cl.recv(1024)
+        if not data:
+            break
+        sock_cl.send(data)
 
 if __name__ == "__main__":
     main()
