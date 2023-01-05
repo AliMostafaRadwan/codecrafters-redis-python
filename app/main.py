@@ -11,11 +11,8 @@ def main():
     server_socket = socket.create_server(("localhost", 6379), reuse_port=True)
     
     sock_cl, addr = server_socket.accept()
-    while sock_cl:
-        data = sock_cl.recv(1024)
-        if not data:
-            break
-        sock_cl.send(data)
+    while sock_cl.recv(1024):
+        sock_cl.send(b"+PONG\r\n")
 
 if __name__ == "__main__":
     main()
